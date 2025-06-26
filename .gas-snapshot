@@ -1,0 +1,8 @@
+Integrationtest:testUsercanWithdrawInteraction() (gas: 3477341)
+Integrationtest:testusercanfundInteraction() (gas: 1828828)
+Testinteractions:testMinimumusd() (gas: 8868)
+Testinteractions:testOwner() (gas: 9189)
+Testinteractions:testfund() (gas: 106501)
+Testinteractions:testfunders() (gas: 103598)
+Testinteractions:testwithdraw() (gas: 19404)
+ZkSyncDevOps:testZkSyncChainFails() (gas: 98416)
