@@ -1,66 +1,98 @@
-## Foundry
+# FUND ME
+this is a crowdsourcing contract to provide an opportunity for the community to contribute financiially to the project which will be withdrawen by the owner and then used for the core purpose of improving user experience and incentives
+## Features
+✅ Accepts ETH contributions from any user  
+✅ Enforces a minimum contribution in USD terms using Chainlink oracles  
+✅ Tracks contributors and amounts funded  
+✅ Only the contract owner can withdraw collected funds  
+✅ Includes unit and integration tests with Foundry  
+## Contract Overview
+The key functionality of the fundme contract are
+- Price converter library
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+  - ` ` `getprice()` ` ` function to get the most recent price of the Token from a chainlink refrence contract
+  - ` ` `getConvertionRate()` ` ` function to convert the Token ammount to be funded to its USD value
+  
+- Fundme Contract
+  
+  - ` ` `constructor()` ` `  function that set the owner address and pricefeed address
+  - ` ` `fund()` ` ` function which is payable and pass the ` ` `msg.value` ` ` and ` ` `s_pricefeed` ` ` into the ` ` `getConvertionRate()` ` ` to enable user fund a value ` ` `>=5e15 wei` ` ` which will store their address inside a ` ` `funders` ` ` array and a mapping of ` ` `address to ammount funded` ` `
+  - ` ` `onlyOwner()` ` ` function modifier sets the owner to be strictly equal to the ` ` `msg.sender` ` ` it modifies the withdraw function
+  - ` ` `withdraw()` ` ` function allows the owner to withdraw all the ammount funded of all the funders and set the array and mapping to a zeroth address and ammount respectively
+## Installation
+**Clone the repo:**
 
-Foundry consists of:
+` ` `bash
+git clone https://github.com/Andrewgx/foundry-fund-me-f24
+cd foundry-fund-me-f24
+forge build
+` ` `
+<p></p>
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+**Install foundry:**
 
-## Documentation
+` ` `bash
+curl -L https://foundry.paradigm.xyz | bash
+foundryup
+` ` `
+<p></p>
 
-https://book.getfoundry.sh/
+**Install dependencies:**
+
+` ` `bash
+forge install
+` ` `
 
 ## Usage
+### Deploy locally
+**Start a local anvil node:**
 
-### Build
+` ` `bash
+anvil
+` ` `
 
-```shell
-$ forge build
-```
+**Deploy contract with foundry:**
 
-### Test
+` ` `bash
+forge script script/DeployFundMe.s.sol --rpc-url http://127.0.0.1:8545 --broadcast -vvvv
+` ` `
+### Deploy to a Testnet(SEPOLIA)
 
-```shell
-$ forge test
-```
+**Set your .env file:**
 
-### Format
+` ` `bash
+SEPOLIA_RPC_URL=YOUR_RPC_URL
+SEPOLIA_PRIVATE_KEY=YOUR_PRIVATE_KEY
+` ` `
+<p></p>
 
-```shell
-$ forge fmt
-```
+Then:
 
-### Gas Snapshots
+` ` `bash
+forge script script/DeployFundMe.s.sol --rpc-url $SEPOLIA_RPC_URL --private-key $SEPOLIA_PRIVATE_KEY --broadcast -vvvv
+` ` `
 
-```shell
-$ forge snapshot
-```
+## Security Notes
+- Access control enforced with onlyOwner modifier
 
-### Anvil
+- Minimum funding validated with Chainlink oracles
 
-```shell
-$ anvil
-```
+- Well-tested with unit and integration tests
+## Contributing
+Pull requests and suggestions are welcome!
 
-### Deploy
+` ` `bash
+git checkout -b feature/your-feature
+git commit -m "Add feature"
+git push origin feature/your-feature
+` ` `
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
+## License
+MIT license uas used
 
-### Cast
+## Author
+You can reach out to the author of this project on X(Twitter)
+https://x.com/bricks_chains 
 
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+## Aknoledgments
+This project was made possible with the help of @PatrickAlphaC(https://github.com/PatrickAlphaC) a smartcontract engineer and educator 
